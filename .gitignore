@@ -10,3 +10,5 @@ frontend/out/
 .DS_Store
 pgdata/
 .env.local
+
+frontend/tsconfig.tsbuildinfo
