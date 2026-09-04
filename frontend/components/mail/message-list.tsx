@@ -44,13 +44,13 @@ export function MessageList({ messages, selectedUid, onSelect, onToggleStar, onT
                   {m.sender.name || m.sender.email}
                 </span>
                 <span className="ml-auto text-[11px] text-muted-foreground whitespace-nowrap">{formatDate(m.date)}</span>
-                <button onClick={e=>{e.stopPropagation(); onToggleRead(m.uid)}} title={m.read ? "Mark unread" : "Mark read"} className="p-1 rounded hover:bg-background text-muted-foreground/40 hover:text-foreground opacity-0 group-hover:opacity-100 focus:opacity-100">
-                  {m.read ? <Mail className="w-3.5 h-3.5" /> : <MailCheck className="w-3.5 h-3.5" />}
-                </button>
                 <button onClick={e=>{e.stopPropagation(); onToggleStar(m.uid)}} className={cn("p-1 rounded hover:bg-background", m.starred ? "text-amber-500" : "text-muted-foreground/40 hover:text-amber-500")}>
                   <Star className={cn("w-3.5 h-3.5", m.starred && "fill-amber-500")} />
                 </button>
-                <button onClick={e=>{e.stopPropagation(); onDelete(m.uid)}} title="Delete" className="p-1 rounded hover:bg-background text-muted-foreground/40 hover:text-red-500 opacity-0 group-hover:opacity-100 focus:opacity-100">
+                <button onClick={e=>{e.stopPropagation(); onToggleRead(m.uid)}} title={m.read ? "Mark unread" : "Mark read"} className="p-1 rounded hover:bg-background text-muted-foreground/40">
+                  {m.read ? <Mail className="w-3.5 h-3.5" /> : <MailCheck className="w-3.5 h-3.5" />}
+                </button>
+                <button onClick={e=>{e.stopPropagation(); onDelete(m.uid)}} title="Delete" className="p-1 rounded hover:bg-background text-muted-foreground/40 text-red-500">
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>
               </div>

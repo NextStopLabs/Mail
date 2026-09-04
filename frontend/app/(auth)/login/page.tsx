@@ -42,7 +42,7 @@ export default function LoginPage() {
       <div className="w-full max-w-sm space-y-8">
         <div className="space-y-2 text-center">
           <div className="mx-auto w-10 h-10 rounded-xl bg-foreground text-background flex items-center justify-center text-sm font-bold">N</div>
-          <h1 className="text-2xl font-semibold tracking-tight">NextStop Mail</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">Next Stop Mail</h1>
           <p className="text-sm text-muted-foreground">Sign in with your email credentials.</p>
         </div>
 
@@ -86,10 +86,6 @@ export default function LoginPage() {
             {loading ? "Signing in…" : "Sign in"} {!loading && <ArrowRight className="w-4 h-4" />}
           </button>
         </form>
-
-        <p className="text-xs text-muted-foreground text-center leading-relaxed">
-          Uses your existing mailbox password. Never stored in plain text.
-        </p>
       </div>
     </div>
   )
