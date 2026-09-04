@@ -3,8 +3,8 @@ import type { Metadata } from "next"
 import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
-  title: "NextStop Webmail",
-  description: "Modern webmail for nextstoplabs.org",
+  title: "Next Stop Wem-mail",
+  description: "Modern Wem-mail for nextstoplabs.org",
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
