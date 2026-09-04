@@ -1,17 +1,18 @@
 "use client"
 import { cn, formatDate, initials, avatarColor } from "@/lib/utils"
-import { Star, Paperclip, MailOpen, Mail, MailCheck } from "lucide-react"
+import { Star, Paperclip, MailOpen, Mail, MailCheck, Trash2 } from "lucide-react"
 
 type Msg = {
   uid:string; subject:string; snippet:string; date:string; read:boolean; starred:boolean; hasAttachments:boolean; sender:{name:string,email:string}
 }
 
-export function MessageList({ messages, selectedUid, onSelect, onToggleStar, onToggleRead, loading }: {
+export function MessageList({ messages, selectedUid, onSelect, onToggleStar, onToggleRead, onDelete, loading }: {
   messages: Msg[]
   selectedUid?: string
   onSelect: (uid:string)=>void
   onToggleStar: (uid:string)=>void
   onToggleRead: (uid:string)=>void
+  onDelete: (uid:string)=>void
   loading?: boolean
 }) {
   if (loading) {
@@ -48,6 +49,9 @@ export function MessageList({ messages, selectedUid, onSelect, onToggleStar, onT
                 </button>
                 <button onClick={e=>{e.stopPropagation(); onToggleStar(m.uid)}} className={cn("p-1 rounded hover:bg-background", m.starred ? "text-amber-500" : "text-muted-foreground/40 hover:text-amber-500")}>
                   <Star className={cn("w-3.5 h-3.5", m.starred && "fill-amber-500")} />
+                </button>
+                <button onClick={e=>{e.stopPropagation(); onDelete(m.uid)}} title="Delete" className="p-1 rounded hover:bg-background text-muted-foreground/40 hover:text-red-500 opacity-0 group-hover:opacity-100 focus:opacity-100">
+                  <Trash2 className="w-3.5 h-3.5" />
                 </button>
               </div>
               <div className={cn("truncate pr-6", !m.read ? "font-medium text-foreground" : "text-muted-foreground")}>{m.subject}</div>

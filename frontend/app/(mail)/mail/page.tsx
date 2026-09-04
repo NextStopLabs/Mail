@@ -196,8 +196,7 @@ export default function MailPage() {
     }
   }
 
-  async function toggleRead(uid:string){
-    const msg = messages.find(m=>m.uid===uid)
+  async function toggleRead(uid:string){    const msg = messages.find(m=>m.uid===uid)
     if (!msg) return
     const next = !msg.read
     setMessages(prev=>prev.map(m=>m.uid===uid?{...m, read:next}:m))
@@ -206,6 +205,26 @@ export default function MailPage() {
     try { await apiFetch(`/messages/${encodeURIComponent(selectedMailbox)}/${uid}/read/`, {method:"POST", body: JSON.stringify({read: next})}) } catch {
       setMessages(prev=>prev.map(m=>m.uid===uid?{...m, read:!next}:m))
       adjustUnseen(selectedMailbox, next ? +1 : -1)
+    }
+  }
+
+  async function deleteMessage(uid:string){
+    const msg = messages.find(m=>m.uid===uid)
+    const wasUnread = msg ? !msg.read : false
+    const wasSelected = selectedUid === uid
+    // optimistic remove
+    setMessages(prev=>prev.filter(m=>m.uid!==uid))
+    setTotal(t=>Math.max(0, t-1))
+    if (wasUnread) adjustUnseen(selectedMailbox, -1)
+    if (wasSelected) { setSelectedUid(null); setSelectedMsg(null) }
+    try {
+      const res = await apiFetch(`/messages/${encodeURIComponent(selectedMailbox)}/${uid}/delete/`, {method:"POST", body:"{}"})
+      if (!res.ok) throw new Error("delete failed")
+      loadMailboxes()
+    } catch {
+      // revert via refetch so the row comes back
+      loadMessages(selectedMailbox, page, searchQuery)
+      loadMailboxes()
     }
   }
 
@@ -313,7 +332,7 @@ export default function MailPage() {
             <div className="px-3 py-1.5 border-b text-xs text-muted-foreground">{cleanupMsg}</div>
           )}
           <div className="flex-1 overflow-y-auto">
-            <MessageList messages={messages} selectedUid={selectedUid||undefined} onSelect={openMessage} onToggleStar={toggleStar} onToggleRead={toggleRead} loading={loading} />
+            <MessageList messages={messages} selectedUid={selectedUid||undefined} onSelect={openMessage} onToggleStar={toggleStar} onToggleRead={toggleRead} onDelete={deleteMessage} loading={loading} />
           </div>
           <div className="p-2 border-t flex items-center justify-between text-xs bg-card">
             <button disabled={page<=1} onClick={()=>setPage(p=>Math.max(1,p-1))} className="px-3 py-1 rounded-full border disabled:opacity-40">Previous</button>
