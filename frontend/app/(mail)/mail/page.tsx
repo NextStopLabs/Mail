@@ -283,7 +283,7 @@ export default function MailPage() {
         <button onClick={()=>setShowSidebar(!showSidebar)} className="p-2 hover:bg-accent rounded-lg lg:hidden"><Menu className="w-5 h-5" /></button>
         <div className="hidden lg:flex items-center gap-2 font-semibold text-sm">
           <div className="w-7 h-7 rounded-md bg-foreground text-background flex items-center justify-center text-xs">N</div>
-          <span>Mail</span>
+          <span>Wem-Mail</span>
           <span className="text-muted-foreground font-normal">· {userEmail}</span>
         </div>
         <div className="flex-1 max-w-xl mx-2 lg:mx-6 relative">
