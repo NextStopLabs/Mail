@@ -1,0 +1,12 @@
+.env
+backend/db.sqlite3
+backend/staticfiles/
+backend/__pycache__/
+backend/.venv/
+frontend/.next/
+frontend/node_modules/
+frontend/out/
+*.pyc
+.DS_Store
+pgdata/
+.env.local
