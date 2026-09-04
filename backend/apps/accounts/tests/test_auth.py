@@ -7,6 +7,9 @@ User = get_user_model()
 
 class AuthTests(TestCase):
     def setUp(self):
+        # Isolate throttle counters between tests (DRF throttles share the cache)
+        from django.core.cache import cache
+        cache.clear()
         self.client = Client(enforce_csrf_checks=False)
 
     @patch("apps.accounts.views.verify_credentials")

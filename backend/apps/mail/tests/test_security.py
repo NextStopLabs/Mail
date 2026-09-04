@@ -3,6 +3,9 @@ from unittest.mock import patch, MagicMock
 
 class SecurityTests(TestCase):
     def setUp(self):
+        # Isolate mailbox cache + throttle counters between tests
+        from django.core.cache import cache
+        cache.clear()
         self.client = Client(enforce_csrf_checks=False)
         with patch("apps.accounts.views.verify_credentials") as mv:
             mv.return_value = None

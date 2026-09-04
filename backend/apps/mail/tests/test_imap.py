@@ -4,6 +4,9 @@ from apps.accounts.crypto import encrypt_password
 
 class IMAPServiceTests(TestCase):
     def setUp(self):
+        # Isolate mailbox cache + throttle counters between tests
+        from django.core.cache import cache
+        cache.clear()
         self.client = Client(enforce_csrf_checks=False)
         # Create user and login via mock IMAP
         with patch("apps.accounts.views.verify_credentials") as mock_verify:

@@ -111,7 +111,11 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
     "DEFAULT_THROTTLE_CLASSES": ["rest_framework.throttling.UserRateThrottle", "rest_framework.throttling.AnonRateThrottle"],
-    "DEFAULT_THROTTLE_RATES": {"user": "1000/hour", "anon": "100/minute", "login": "10/minute"},
+    "DEFAULT_THROTTLE_RATES": {
+        "user": os.environ.get("DRF_THROTTLE_USER", "1000/hour"),
+        "anon": os.environ.get("DRF_THROTTLE_ANON", "100/minute"),
+        "login": os.environ.get("LOGIN_RATE_LIMIT", "10/minute"),
+    },
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 50,
 }

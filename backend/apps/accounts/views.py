@@ -1,4 +1,5 @@
 import logging
+import os
 from django.contrib.auth import get_user_model, login, logout
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.utils.decorators import method_decorator
@@ -13,7 +14,9 @@ from apps.mail.services.imap_client import verify_credentials, IMAPAuthError
 logger = logging.getLogger("auth")
 
 class LoginThrottle(AnonRateThrottle):
-    rate = "10/minute"  # brute-force protection; settings THROTTLE_RATES login is fallback
+    # Brute-force protection. Overridable via env (see .env.example) so CI/tests
+    # can raise it without touching code. Settings THROTTLE_RATES login is fallback.
+    rate = os.environ.get("LOGIN_RATE_LIMIT", "10/minute")
     scope = "login"
 
 User = get_user_model()

@@ -129,6 +129,14 @@ docker compose -f docker-compose.prod.yml up --build -d
 
 The existing Modoboa/Postfix/Dovecot on `mail.nextstoplabs.org` remains untouched. New app serves `webmail.nextstoplabs.org` via Nginx.
 
+**Prebuilt images (no local build):** CI publishes `ghcr.io/nextstoplabs/mail-backend` and `ghcr.io/nextstoplabs/mail-frontend` on every push to `main`. Deploy with:
+
+```bash
+docker compose -f docker-compose.images.yml pull
+docker compose -f docker-compose.images.yml up -d
+# Pin a specific CI build: IMAGE_TAG=<short-sha> docker compose -f docker-compose.images.yml up -d
+```
+
 ---
 
 ## Tech Stack
